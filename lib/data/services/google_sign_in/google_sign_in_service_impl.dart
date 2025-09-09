@@ -7,7 +7,7 @@ import 'google_sign_in_service.dart';
 
 final class GoogleSignInServiceImpl implements GoogleSignInService {
   @override
-  Future<Result<void, String>> isSignedIn() async {
+  Future<Result<Exception, String>> isSignedIn() async {
     try {
       final logged = await GoogleSignIn.instance
           .attemptLightweightAuthentication();

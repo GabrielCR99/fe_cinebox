@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../core/themes/resource.dart';
+import '../core/widgets/loader_messages.dart';
 import 'commands/login_with_google_command.dart';
 import 'login_view_model.dart';
 import 'widgets/sign_in_google_button.dart';
@@ -13,9 +14,21 @@ final class LoginScreen extends ConsumerStatefulWidget {
   ConsumerState<ConsumerStatefulWidget> createState() => _LoginScreenState();
 }
 
-final class _LoginScreenState extends ConsumerState<LoginScreen> {
+final class _LoginScreenState extends ConsumerState<LoginScreen>
+    with LoaderAndMessages<LoginScreen> {
   @override
   Widget build(BuildContext context) {
+    ref.listen(
+      loginWithGoogleCommandProvider,
+      (_, state) {
+        state.whenOrNull(
+          data: (_) =>
+              Navigator.of(context).pushReplacementNamed<void, void>('/home'),
+          error: (_, _) => showErrorSnackBar('Erro ao realizar login'),
+        );
+      },
+    );
+
     return Scaffold(
       body: Stack(
         children: [
@@ -46,8 +59,7 @@ final class _LoginScreenState extends ConsumerState<LoginScreen> {
 
                       return SignInGoogleButton(
                         isLoading: state.isLoading,
-                        onPressed: () =>
-                            ref.read(loginViewModelProvider).googleLogin(),
+                        onPressed: ref.read(loginViewModelProvider).googleLogin,
                       );
                     },
                   ),

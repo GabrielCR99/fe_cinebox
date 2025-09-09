@@ -4,11 +4,11 @@ import 'package:loading_animation_widget/loading_animation_widget.dart';
 
 base mixin LoaderAndMessages<T extends ConsumerStatefulWidget>
     on ConsumerState<T> {
-  var isOpen = false;
+  var _isOpen = false;
 
   void showLoader() {
-    if (!isOpen) {
-      isOpen = true;
+    if (!_isOpen) {
+      _isOpen = true;
 
       showDialog<void>(
         context: context,
@@ -22,9 +22,10 @@ base mixin LoaderAndMessages<T extends ConsumerStatefulWidget>
   }
 
   void hideLoader() {
-    if (isOpen) {
-      isOpen = false;
-      Navigator.of(context).pop<void>();
+    if (_isOpen) {
+      _isOpen = false;
+
+      return Navigator.of(context).pop<void>();
     }
   }
 

@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import '../../core/themes/colors.dart';
 import '../../core/themes/resource.dart';
 
-class SignInGoogleButton extends StatelessWidget {
+final class SignInGoogleButton extends StatelessWidget {
   const SignInGoogleButton({
     required this.onPressed,
     required this.isLoading,
